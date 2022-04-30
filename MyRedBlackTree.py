@@ -10,6 +10,9 @@ class BalancedNode:
         self.right = None
         self.color = "Red"
 
+    def set_parent(self, new_p):
+        self.parent = new_p
+
     def children(self):
         if self.left is None and self.right is None:
             return 0
@@ -37,9 +40,21 @@ class MyRedBlackTree:
             self.__recursion_up_down_print(starter.right, user_data)
 
     def __left_rotation(self, node):
+        p = node.parent
         temp = node.right
         node.right = temp.left
+        if not (temp.left is None):
+            temp.left.set_parent(node)
         temp.left = node
+        node.set_parent(temp)
+        temp.set_parent(p)
+        if node.data == self.root.data:
+            self.root = temp
+        if not (p is None):
+            if not (p.right is None) and p.right.data == node.data:
+                p.right = temp
+            else:
+                p.left = temp
         temp.color = "Black"
         if not (temp.right is None):
             temp.right.color = "Red"
@@ -48,9 +63,22 @@ class MyRedBlackTree:
         return temp
 
     def __right_rotation(self, node):
+        p = node.parent
         temp = node.left
         node.left = temp.right
+        if not (temp.right is None):
+            temp.right.set_parent(node)
         temp.right = node
+        node.set_parent(temp)
+        temp.set_parent(p)
+
+        if node.data == self.root.data:
+            self.root = temp
+        if not (p is None):
+            if not (p.left is None) and p.left.data == node.data:
+                p.left = temp
+            else:
+                p.right = temp
         temp.color = "Black"
         if not (temp.right is None):
             temp.right.color = "Red"
@@ -72,12 +100,6 @@ class MyRedBlackTree:
         node.right = self.__right_rotation(node.right)
         return self.__right_right_case(node)
 
-    def __recolor(self, node):
-        if node.color == "Red":
-            node.color = "Black"
-        elif node.color == "Black":
-            node.color = "Red"
-
     def __balance(self, node):
         if node.color == "Black":
             return
@@ -86,54 +108,46 @@ class MyRedBlackTree:
 
             if not (node.parent.parent is None) and node.parent.parent.children() == 2:
 
-                if (node.parent.parent.left.data == node.parent.data and node.parent.parent.right.color == "Red") or (
-                        node.parent.parent.right.data == node.parent.data and node.parent.parent.left.color == "Red"):
-                    self.__recolor(node.parent.parent.left)
-                    self.__recolor(node.parent.parent.right)
-                    if node.parent.parent.data == self.root.data:
-                        return
-                    else:
-                        self.__recolor(node.parent.parent)
-                        self.__balance(node.parent.parent)
-
-                elif node.parent.parent.left.data == node.parent.data and node.parent.parent.right.color == "Black":
-
+                if node.parent.parent.left.data == node.parent.data and node.parent.parent.right.color == "Black":
                     if node.parent.left.data == node.data:
                         self.__left_left_case(node.parent.parent)
                     elif node.parent.right == node.data:
                         self.__left_right_case(node.parent.parent)
 
                 elif node.parent.parent.right.data == node.parent.data and node.parent.parent.left.color == "Black":
-
                     if node.parent.left.data == node.data:
                         self.__right_left_case(node.parent.parent)
                     elif node.parent.right.data == node.data:
                         self.__right_right_case(node.parent.parent)
 
-            elif not (node.parent.parent is None) and node.parent.parent.children() == 1:
+                elif (node.parent.parent.left.data == node.parent.data and node.parent.parent.right.color == "Red") or (
+                        node.parent.parent.right.data == node.parent.data and node.parent.parent.left.color == "Red"):
+                    print("Here")
+                    node.parent.parent.left.color = "Black"
+                    node.parent.parent.right.color = "Black"
+                    if node.parent.parent.data == self.root.data:
+                        return
+                    else:
+                        print("Yes")
+                        node.parent.parent.color = "Red"
+                        self.__balance(node.parent.parent)
 
-                update = None
+            elif (not (node.parent.parent is None)) and node.parent.parent.children() == 1:
+
                 if not (node.parent.parent.left is None) and node.parent.parent.left.data == node.parent.data:
 
                     if not (node.parent.left is None) and node.parent.left.data == node.data:
-                        update = self.__left_left_case(node.parent.parent)
+                        self.__left_left_case(node.parent.parent)
                     elif not (node.parent.right is None) and node.parent.right.data == node.data:
-                        update = self.__left_right_case(node.parent.parent)
+                        self.__left_right_case(node.parent.parent)
 
                 elif not (node.parent.parent.right is None) and node.parent.parent.right.data == node.parent.data:
-
+                    print("Here")
                     if not (node.parent.left is None) and node.parent.left.data == node.data:
-                        update = self.__right_left_case(node.parent.parent)
+                        self.__right_left_case(node.parent.parent)
                     elif not (node.parent.right is None) and node.parent.right.data == node.data:
-                        print("Here")
-                        update = self.__right_right_case(node.parent.parent)
+                        self.__right_right_case(node.parent.parent)
 
-                if not (
-                        node.parent.parent.parent is None) and node.parent.parent.parent.right.data == node.parent.parent.data:
-                    node.parent.parent.parent.right = update
-                elif not (
-                        node.parent.parent.parent is None) and node.parent.parent.parent.left.data == node.parent.parent.data:
-                    node.parent.parent.parent.left = update
 
     def __recursive_insertion(self, starter, data):
         if starter.data == data:
