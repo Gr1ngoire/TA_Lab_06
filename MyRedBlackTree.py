@@ -170,7 +170,7 @@ class MyRedBlackTree:
         elif data < starter.data:
             self.__recursive_search(starter.left, data)
         elif data > starter.data:
-            self.__recursive_insertion(starter.right, data)
+            self.__recursive_search(starter.right, data)
 
     def contains(self, data):
         if self.root is None:
