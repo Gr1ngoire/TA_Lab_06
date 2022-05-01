@@ -162,18 +162,20 @@ class MyRedBlackTree:
             self.__recursive_insertion(starter.right, data)
 
     def __recursive_search(self, starter, data):
-        if data == starter.data:
+        if starter.data == data:
             return True
-        elif data < starter.data:
-            self.__recursive_search(starter.left, data)
-        elif data > starter.data:
-            self.__recursive_search(starter.right, data)
+        elif data < starter.data and not (starter.left is None):
+            return self.__recursive_search(starter.left, data)
+        elif data > starter.data and not (starter.right is None):
+            return self.__recursive_search(starter.right, data)
+        else:
+            return False
 
     def contains(self, data):
         if self.root is None:
             return False
 
-        self.__recursive_search(self.root, data)
+        return self.__recursive_search(self.root, data)
 
     def insert(self, data):
         if self.root is None:
