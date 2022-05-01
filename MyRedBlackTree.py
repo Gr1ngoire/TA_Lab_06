@@ -109,15 +109,15 @@ class MyRedBlackTree:
             if not (node.parent.parent is None) and node.parent.parent.children() == 2:
 
                 if node.parent.parent.left.data == node.parent.data and node.parent.parent.right.color == "Black":
-                    if node.parent.left.data == node.data:
+                    if not (node.parent.left is None) and node.parent.left.data == node.data:
                         self.__left_left_case(node.parent.parent)
-                    elif node.parent.right == node.data:
+                    elif not (node.parent.right is None) and node.parent.right.data == node.data:
                         self.__left_right_case(node.parent.parent)
 
                 elif node.parent.parent.right.data == node.parent.data and node.parent.parent.left.color == "Black":
-                    if node.parent.left.data == node.data:
+                    if not (node.parent.left is None) and node.parent.left.data == node.data:
                         self.__right_left_case(node.parent.parent)
-                    elif node.parent.right.data == node.data:
+                    elif not (node.parent.right is None) and node.parent.right.data == node.data:
                         self.__right_right_case(node.parent.parent)
 
                 elif (node.parent.parent.left.data == node.parent.data and node.parent.parent.right.color == "Red") or (
