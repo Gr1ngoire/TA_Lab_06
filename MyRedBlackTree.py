@@ -122,13 +122,11 @@ class MyRedBlackTree:
 
                 elif (node.parent.parent.left.data == node.parent.data and node.parent.parent.right.color == "Red") or (
                         node.parent.parent.right.data == node.parent.data and node.parent.parent.left.color == "Red"):
-                    print("Here")
                     node.parent.parent.left.color = "Black"
                     node.parent.parent.right.color = "Black"
                     if node.parent.parent.data == self.root.data:
                         return
                     else:
-                        print("Yes")
                         node.parent.parent.color = "Red"
                         self.__balance(node.parent.parent)
 
@@ -142,7 +140,6 @@ class MyRedBlackTree:
                         self.__left_right_case(node.parent.parent)
 
                 elif not (node.parent.parent.right is None) and node.parent.parent.right.data == node.parent.data:
-                    print("Here")
                     if not (node.parent.left is None) and node.parent.left.data == node.data:
                         self.__right_left_case(node.parent.parent)
                     elif not (node.parent.right is None) and node.parent.right.data == node.data:
