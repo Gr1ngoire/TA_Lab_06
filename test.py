@@ -1,5 +1,6 @@
 from MyRedBlackTree import *
 from UnbalancedTree import *
+from RedBlackTree import *
 import random
 import time
 
@@ -7,7 +8,7 @@ rb_tree = MyRedBlackTree()
 unbalanced_tree = UnbalancedTree()
 
 #filling with 1000
-print("#Insertion(1000)")
+'''print("#Insertion(1000)")
 print("random")
 print("balanced")
 random_vals = list( dict.fromkeys([random.randrange(10**5, 10**9) for i in range(1000)]))
@@ -49,7 +50,11 @@ print("unbalanced")
 start = time.perf_counter()
 unbalanced_tree.delete()
 print((time.perf_counter() - start) * 1000)
-'''print("balanced")
+print("balanced")
+'''
+rb_tree = MyRedBlackTree()
+for i in range(1000):
+    rb_tree.insert(i)
 start = time.perf_counter()
-rb_tree.
-print((time.perf_counter() - start) * 1000)'''
+rb_tree.delete(500)
+print((time.perf_counter() - start) * 1000)
