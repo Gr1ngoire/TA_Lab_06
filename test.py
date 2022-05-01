@@ -10,7 +10,7 @@ unbalanced_tree = UnbalancedTree()
 print("#Insertion(1000)")
 print("random")
 print("balanced")
-random_vals = [random.randrange(10**5, 10**9) for i in range(1000)]
+random_vals = list( dict.fromkeys([random.randrange(10**5, 10**9) for i in range(1000)]))
 start = time.perf_counter()
 for val in random_vals:
     rb_tree.insert(val)
@@ -43,3 +43,13 @@ print("unbalanced")
 start = time.perf_counter()
 unbalanced_tree.insert(500)
 print((time.perf_counter() - start) * 1000)
+#Deleting
+print("#Deleting")
+print("unbalanced")
+start = time.perf_counter()
+unbalanced_tree.delete()
+print((time.perf_counter() - start) * 1000)
+'''print("balanced")
+start = time.perf_counter()
+rb_tree.
+print((time.perf_counter() - start) * 1000)'''
