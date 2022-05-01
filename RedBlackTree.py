@@ -26,8 +26,6 @@ class BalancedNode:
 class MyRedBlackTree:
 
     def __init__(self):
-        self.NULL = BalancedNode(None, None)
-        self.NULL.color = "Black"
         self.root = None
 
     def __recursion_up_down_print(self, starter, user_data):
@@ -211,7 +209,7 @@ class MyRedBlackTree:
             b.parent = a.parent
 
     def __node_search(self, node, data):
-        while node is not None:  # Search for the node having that value/ key and store it in 'z'
+        while node is not None:  
             if node.data == data:
                 return node
             if node.data <= data:
