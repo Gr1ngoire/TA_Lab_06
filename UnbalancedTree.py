@@ -54,6 +54,18 @@ class UnbalancedTree:
                 helper.left = None
         return
 
+    def __recursion_up_down_print(self, starter, user_data):
+        if starter.key == self.leaf.key:
+            user_data.tree_string = f"{starter.key}"
+
+        if not (starter.left is None):
+            user_data.tree_string = f"{user_data.tree_string} {starter.left.key}"
+            self.__recursion_up_down_print(starter.left, user_data)
+
+        if not (starter.right is None):
+            user_data.tree_string = f"{user_data.tree_string} {starter.right.key}"
+            self.__recursion_up_down_print(starter.right, user_data)
+    
     def search(self, element):
         it = 0
         check = self.leaf
